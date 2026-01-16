@@ -5,9 +5,14 @@ app.use("/about", (req, res) => {
   res.send("about");
 });
 
-app.use("/", (req, res) => {
+app.get("/", (req, res,next) => {
+  next()
   res.send("homexjhbasj");
-});
+},
+(req, res) => {
+  res.send("home2");
+}
+);
 
 
 const PORT = 3000;
