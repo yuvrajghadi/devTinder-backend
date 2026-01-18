@@ -1,0 +1,33 @@
+app.use("/admin",auth)
+
+app.get("/admin/getuser", (req, res) => {
+  res.send("userdata");
+});
+
+app.get("/admin/deleteuser", (req, res) => {
+  res.send("delete userdata");
+});
+
+app.use("/user",userauth, (req, res) => {
+  res.send("delete userdata");
+});
+
+app.get("/user/getdata",userauth, (req, res) => {
+  res.send(" userdata");
+});
+
+
+
+app.use("/about", (req, res) => {
+  res.send("about");
+});
+
+app.get("/", (req, res,next) => {
+  next()
+  res.send("homexjhbasj");
+},
+(req, res) => {
+  res.send("home2");
+}
+);
+

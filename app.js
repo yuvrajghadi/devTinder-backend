@@ -1,22 +1,30 @@
 const express = require("express");
+const connectDB = require("./config/database");
+const User = require("./models/user");
+
 const app = express();
-
-app.use("/about", (req, res) => {
-  res.send("about");
-});
-
-app.get("/", (req, res,next) => {
-  next()
-  res.send("homexjhbasj");
-},
-(req, res) => {
-  res.send("home2");
-}
-);
-
-
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`app is listing on http://localhost:${PORT}`);
+
+app.use(express.json());
+
+app.post("/signup", async(req, res) => {
+  const user = new User(req.body);
+
+  try {
+  await  user.save()
+    res.send('User Saved susscefully')
+  } catch (err) {
+    res.status(400).send("user  not saved",err.msg)
+  }
 });
 
+connectDB()
+  .then(() => {
+    console.log("Database connected successfully");
+    app.listen(PORT, () => {
+      console.log(`app is listing on http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed", err);
+  });
